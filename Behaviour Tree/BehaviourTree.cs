@@ -15,6 +15,7 @@ public class BehaviourSchedular : MonoBehaviour
         List<BehaviourNode> returnedNodes = currentNode.Update();
         foreach(var node in returnedNodes)
         {
+            if(node != null && !this.ActiveBehaviours.Contains(node))
             this.ActiveBehaviours.Enqueue(node);
         }
         if (currentNode.IsTerminated())

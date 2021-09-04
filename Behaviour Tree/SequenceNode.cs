@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class SequenceNode : BehaviourNode
 {
-    int ChildIndex = 0;
+    int ChildIndex = -1;
     List<BehaviourNode> Children;
     BehaviourNode CurrentNode;
     public override event BehaviourObserver ChildCompleteEvent;
@@ -45,9 +45,11 @@ public class SequenceNode : BehaviourNode
 
     public override void OnInitialize()
     {
-
-        this.ChildIndex = 0;
-        if (this.Children[this.ChildIndex] != null) this.CurrentNode = this.Children[0];
+        if (ChildIndex == -1)
+        {
+            ++this.ChildIndex;
+            if (this.Children[this.ChildIndex] != null) this.CurrentNode = this.Children[0];
+        }
         if (this.CurrentNode != null)
         {
             this.CurrentNode.ChildCompleteEvent += OnChildComplete;
