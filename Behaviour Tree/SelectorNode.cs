@@ -2,25 +2,30 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SequenceNode : BehaviourNode
+public class SelectorNode : BehaviourNode
 {
     int ChildIndex = -1;
-    public  List<BehaviourNode> Children;
+    public List<BehaviourNode> Children;
     BehaviourNode CurrentNode;
-    public string Log;
+
     public override event BehaviourObserver ChildCompleteEvent;
     private void Start()
     {
-   
+
     }
     public override bool IsTerminated()
     {
 
         if (this.CurrentState == NodeStates.FAILED || this.CurrentState == NodeStates.SUCCEEDED)
         {
+
             if (this.AlwaysSuceed)
             {
                 this.CurrentState = NodeStates.SUCCEEDED;
+            }
+            else if (this.AlwaysFail)
+            {
+                this.CurrentState = NodeStates.FAILED;
             }
             if (this.ChildCompleteEvent != null) this.ChildCompleteEvent(this.CurrentState, this);
             this.ChildIndex = -1;
@@ -30,21 +35,22 @@ public class SequenceNode : BehaviourNode
     }
 
     public override void OnChildComplete(NodeStates nodeState, BehaviourNode completedChild)
-    {  
-        if(completedChild.CurrentState == NodeStates.FAILED)
+    {
+        if (completedChild.CurrentState == NodeStates.SUCCEEDED)
         {
-            this.CurrentState = NodeStates.FAILED;
+            this.CurrentState = NodeStates.SUCCEEDED  ;
             completedChild.ChildCompleteEvent -= OnChildComplete;
         }
-        else if(completedChild == this.Children[this.Children.Count-1])
+        else if (completedChild == this.Children[this.Children.Count - 1])
         {
-            this.CurrentState = NodeStates.SUCCEEDED;
+            this.CurrentState = NodeStates.FAILED;
             completedChild.ChildCompleteEvent -= OnChildComplete;
         }
         else
         {
             this.ChildIndex++;
-            Mathf.Clamp(this.ChildIndex, 0, this.Children.Count - 1);
+            if (this.ChildIndex > this.Children.Count - 1)
+                this.ChildIndex = this.Children.Count - 1;
 
             completedChild.ChildCompleteEvent -= OnChildComplete;
             if (this.Children[this.ChildIndex] != null)
@@ -76,19 +82,18 @@ public class SequenceNode : BehaviourNode
         Debug.Log(this.Log + "index = " + this.ChildIndex);
 
         List<BehaviourNode> children = new List<BehaviourNode>();
-        if(this.Repeating)
+        if (this.Repeating)
         {
-          //  children.Add(this);
+            //  children.Add(this);
         }
-       if(this.ChildIndex != -1 &&  this.ChildIndex  <=this.Children.Count-1 && this.CurrentState != NodeStates.FAILED)
-       {
-          // Debug.Log(this.gameObject.name + "updating");
+        if (this.ChildIndex != -1 && this.ChildIndex <= this.Children.Count - 1 && this.CurrentState != NodeStates.FAILED)
+        {
+            // Debug.Log(this.gameObject.name + "updating");
             if (this.Children[this.ChildIndex] != null)
             {
                 children.Add(this.Children[this.ChildIndex]);
             }
-       }
+        }
         return children;
     }
-
 }
