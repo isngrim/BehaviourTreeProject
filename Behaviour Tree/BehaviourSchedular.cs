@@ -1,18 +1,44 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class BehaviourSchedular : MonoBehaviour
 {
     Queue<BehaviourNode> ActiveBehaviours;
+    [SerializeField]
    public BehaviourNode Root;
+    public BehaviourContainer TreeData;
     //   Blackboard Blackboard;
     private void Start()
     {
         this.ActiveBehaviours = new Queue<BehaviourNode>();
+        Root = this.BuildTree(TreeData);
         if(Root != null)
         this.ActiveBehaviours.Enqueue(Root);
 
+    }
+    private BehaviourNode BuildTree(BehaviourContainer treeData)
+    {
+       
+        var NodeList = new Dictionary<string,BehaviourNode>();
+        foreach (var nodeData in treeData.BehaviourNodeData)
+        {
+            Debug.Log("BUILD Tree");
+            var newNode = nodeData.BuildNode();
+          
+            NodeList[newNode.NodeId]=newNode;  
+        }
+        foreach (var linkData in treeData.NodeLinks)
+        {
+            if (linkData != treeData.NodeLinks[0])
+            {
+                var parentNode = NodeList[linkData.BaseNodeGuid];
+                var childNode = NodeList[linkData.TargetNodeGuid];
+                parentNode.Children.Add(childNode);
+            }
+        }
+        return NodeList[treeData.NodeLinks[0].TargetNodeGuid]; 
     }
     bool Step()
     {
