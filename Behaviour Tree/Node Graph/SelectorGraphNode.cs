@@ -12,7 +12,7 @@ public class SelectorGraphNode : BehaviourGraphNode
     {
         this.nodeType = NodeType.SELECTOR;
     }
-    public SelectorGraphNode(BehaviourGraphView graph,SelectorNodeData nodeData)
+    public SelectorGraphNode(BehaviourGraphView graph, BehaviourNodeData nodeData)
     {
         this.nodeType = NodeType.SELECTOR;
         this.RepeatPolicy = nodeData.RepeatPolicy;
@@ -21,14 +21,14 @@ public class SelectorGraphNode : BehaviourGraphNode
     public override BehaviourNodeData SaveToNodeData()
     {
 
-        var nodeData = new SelectorNodeData()
+        var nodeData = new BehaviourNodeData()
         {
             NodeGuid = this.GUID,
             BehaviourStuff = this.Text,
             NodePosition = this.GetPosition().position,
             NodeType = this.nodeType,
-            RepeatPolicy = (RepeatPolicies)RepeatPolicyField.value,
-            ReturnPolicy = (ReturnPolicies)ReturnPolicyField.value
+            RepeatPolicy = (RepeatPolicies)this.RepeatPolicyField.value,
+            ReturnPolicy = (ReturnPolicies)this.ReturnPolicyField.value
         };
         return nodeData;
     }

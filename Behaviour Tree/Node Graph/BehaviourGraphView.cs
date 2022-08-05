@@ -115,7 +115,7 @@ public class BehaviourGraphView : GraphView
         BehaviourGraphNode behaviourNode = null;
         if (nodeData.NodeType == NodeType.PARALLEL)
         {
-            behaviourNode = new ParallelGraphNode(this, nodeData as ParallelNodeData)
+            behaviourNode = new ParallelGraphNode(this, nodeData)
             {
                 title = "Parallel Node",
                 Text = "Parallel Node",
@@ -126,7 +126,7 @@ public class BehaviourGraphView : GraphView
         }
         else if (nodeData.NodeType == NodeType.SELECTOR)
         {
-            behaviourNode = new SelectorGraphNode(this, nodeData as SelectorNodeData)
+            behaviourNode = new SelectorGraphNode(this, nodeData )
             {
                 title = "Selector Node",
                 Text = "Selector Node",
@@ -137,7 +137,7 @@ public class BehaviourGraphView : GraphView
         }
         else if (nodeData.NodeType == NodeType.SEQUENCE)
         {
-            behaviourNode = new SequenceGraphNode(this, nodeData as SequenceNodeData)
+            behaviourNode = new SequenceGraphNode(this, nodeData )
             {
                 title = "Sequence Node",
                 Text = "Sequence Node",

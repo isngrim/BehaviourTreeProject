@@ -78,6 +78,7 @@ public class SelectorNode : BehaviourNode
 
     public override List<BehaviourNode> UpdateNode()
     {
+        Debug.Log(this.gameObject.name + " updating");
         Debug.Log(this.Log + "index = " + this.ChildIndex);
 
         List<BehaviourNode> children = new List<BehaviourNode>();

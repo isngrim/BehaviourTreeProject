@@ -100,7 +100,7 @@ public class ParallelNode : BehaviourNode
 
     public override List<BehaviourNode> UpdateNode()
     {
-
+        Debug.Log(this.gameObject.name + " updating");
 
         List<BehaviourNode> children = new List<BehaviourNode>();
         if (RepeatPolicy != RepeatPolicies.NOREPEAT)
@@ -109,7 +109,7 @@ public class ParallelNode : BehaviourNode
         }
         if (this.Children.Count > 0 && this.CurrentState != NodeStates.FAILED)
         {
-            // Debug.Log(this.gameObject.name + "updating");
+           
           foreach(var child in this.Children)
             {
                 Debug.Log(this.Log + " running  " + child.Log);

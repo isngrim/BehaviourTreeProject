@@ -19,7 +19,7 @@ public class ParallelGraphNode : BehaviourGraphNode
         this.extensionContainer.Add(SuccessPolicyField);
         
     }
-    public ParallelGraphNode(BehaviourGraphView graph,ParallelNodeData nodeData)
+    public ParallelGraphNode(BehaviourGraphView graph,BehaviourNodeData nodeData)
     {
         this.nodeType = nodeData.NodeType;
 
@@ -33,16 +33,16 @@ public class ParallelGraphNode : BehaviourGraphNode
 
     public override BehaviourNodeData SaveToNodeData()
     {
-        var nodeData = new ParallelNodeData()
+        BehaviourNodeData nodeData = new BehaviourNodeData()
         {
 
             NodeGuid = this.GUID,
             BehaviourStuff = this.Text,
             NodePosition = this.GetPosition().position,
-            SuccessPolicy = (Policy)SuccessPolicyField.value,
+            SuccessPolicy = (Policy)this.SuccessPolicyField.value,
             NodeType = NodeType.PARALLEL,
-            RepeatPolicy = (RepeatPolicies)RepeatPolicyField.value,
-            ReturnPolicy = (ReturnPolicies)ReturnPolicyField.value
+            RepeatPolicy = (RepeatPolicies)this.RepeatPolicyField.value,
+            ReturnPolicy = (ReturnPolicies)this.ReturnPolicyField.value
         };
         return nodeData;
     }

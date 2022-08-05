@@ -13,37 +13,44 @@ public class BehaviourSchedular : MonoBehaviour
     private void Start()
     {
         this.ActiveBehaviours = new Queue<BehaviourNode>();
-        Root = this.BuildTree(TreeData);
-        if(Root != null)
-        this.ActiveBehaviours.Enqueue(Root);
+        this.Root = this.BuildTree(this.TreeData);
+        
+        Debug.Log("root generated as " + this.Root.NodeId);
+        // if(Root != null)
+        this.ActiveBehaviours.Enqueue(this.Root);
+        if(this.ActiveBehaviours.Count <=0) { Debug.Log("root enqueued"); }
 
     }
     private BehaviourNode BuildTree(BehaviourContainer treeData)
     {
-       
+        Debug.Log("BUILD Tree");
         var NodeList = new Dictionary<string,BehaviourNode>();
         foreach (var nodeData in treeData.BehaviourNodeData)
         {
-            Debug.Log("BUILD Tree");
+            
             var newNode = nodeData.BuildNode();
-          
-            NodeList[newNode.NodeId]=newNode;  
+            Debug.Log(newNode.NodeId);
+            NodeList.Add(nodeData.NodeGuid, newNode);
+ 
         }
         foreach (var linkData in treeData.NodeLinks)
         {
-            if (linkData != treeData.NodeLinks[0])
+            if (linkData.PortName != "Next")
             {
+                
                 var parentNode = NodeList[linkData.BaseNodeGuid];
                 var childNode = NodeList[linkData.TargetNodeGuid];
+                if(childNode !=null)
                 parentNode.Children.Add(childNode);
+                Debug.Log(parentNode.NodeId + " linked to " + childNode.NodeId);
             }
         }
         return NodeList[treeData.NodeLinks[0].TargetNodeGuid]; 
     }
     bool Step()
     {
-        BehaviourNode currentNode = this.ActiveBehaviours.Dequeue();
-        if (currentNode == null) return false;
+        var currentNode = this.ActiveBehaviours.Dequeue();
+        if (currentNode == null) { Debug.Log("no node"); return false; }
         currentNode.OnInitialize();
         List<BehaviourNode> returnedNodes = currentNode.UpdateNode();
         foreach(var node in returnedNodes)
@@ -64,12 +71,13 @@ public class BehaviourSchedular : MonoBehaviour
     protected void Tick()
     {
         this.ActiveBehaviours.Enqueue(null);
-        while (Step()) { }//?
+        while (Step()) { Debug.Log("Schedular is steping through tree"); }//?
     }
     private void Update()
     {
         if (this.ActiveBehaviours.Count > 0)
         {
+            Debug.Log("Schedular is ticking");
             Tick();
         }
         else

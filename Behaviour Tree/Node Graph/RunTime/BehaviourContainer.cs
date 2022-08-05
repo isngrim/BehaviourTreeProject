@@ -5,7 +5,8 @@ using UnityEngine;
 [Serializable]
 public class BehaviourContainer : ScriptableObject
 {
-    
+    [SerializeField]
     public List<NodeLinkData> NodeLinks = new List<NodeLinkData>();
+    [SerializeField]
     public List<BehaviourNodeData> BehaviourNodeData = new List<BehaviourNodeData>();
 }
