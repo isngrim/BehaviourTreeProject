@@ -11,3 +11,4 @@ Implement Decorator Nodes:
     Pathfinding related node ("does path exist", "are we at postion",etc.)
     time limit node?
 switch saved node data to xml
+add documentation to the graph editor
