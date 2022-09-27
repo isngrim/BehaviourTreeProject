@@ -15,15 +15,17 @@ public class BehaviourSchedular : MonoBehaviour
         this.ActiveBehaviours = new Queue<BehaviourNode>();
         this.Root = this.BuildTree(this.TreeData);
         
-        Debug.Log("root generated as " + this.Root.NodeId);
-        // if(Root != null)
-        this.ActiveBehaviours.Enqueue(this.Root);
-        if(this.ActiveBehaviours.Count <=0) { Debug.Log("root enqueued"); }
+      //  Debug.Log("root generated as " + this.Root.NodeId);
+    
+            //add root to queue
+            if (Root != null)
+                this.ActiveBehaviours.Enqueue(this.Root);
+      //  if(this.ActiveBehaviours.Count <=0) { Debug.Log("root enqueued"); }
 
     }
+    //build tree from node data
     private BehaviourNode BuildTree(BehaviourContainer treeData)
     {
-        Debug.Log("BUILD Tree");
         var NodeList = new Dictionary<string,BehaviourNode>();
         foreach (var nodeData in treeData.BehaviourNodeData)
         {
@@ -47,12 +49,17 @@ public class BehaviourSchedular : MonoBehaviour
         }
         return NodeList[treeData.NodeLinks[0].TargetNodeGuid]; 
     }
+
     bool Step()
     {
+        //grab first node in queue
         var currentNode = this.ActiveBehaviours.Dequeue();
         if (currentNode == null) { Debug.Log("no node"); return false; }
+        //initialize it
         currentNode.OnInitialize();
+        //update the node
         List<BehaviourNode> returnedNodes = currentNode.UpdateNode();
+        //enqueue its children
         foreach(var node in returnedNodes)
         {
             if(node != null)
@@ -70,14 +77,15 @@ public class BehaviourSchedular : MonoBehaviour
     }
     protected void Tick()
     {
+        //add end of queue marker
         this.ActiveBehaviours.Enqueue(null);
-        while (Step()) { Debug.Log("Schedular is steping through tree"); }//?
+        while (Step()) { /*for logging */}
     }
     private void Update()
     {
         if (this.ActiveBehaviours.Count > 0)
         {
-            Debug.Log("Schedular is ticking");
+           // Debug.Log("Schedular is ticking");
             Tick();
         }
         else

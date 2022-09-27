@@ -14,75 +14,10 @@ public class ParallelNode : BehaviourNode
 
     public override event BehaviourObserver ChildCompleteEvent;
 
-    public override bool IsTerminated()
-    {
-       // Debug.Log(this.gameObject.name + " " + this.CurrentState);
-
-
-        if (this.CurrentState == NodeStates.FAILED || this.CurrentState == NodeStates.SUCCEEDED)
-        {
-
-            if (ReturnPolicy == ReturnPolicies.ALWAYSUCCEED)
-            {
-                this.CurrentState = NodeStates.SUCCEEDED;
-            }
-            else if (ReturnPolicy == ReturnPolicies.ALWAYSFAIL)
-            {
-                this.CurrentState = NodeStates.FAILED;
-            }
-            if (this.ChildCompleteEvent != null) this.ChildCompleteEvent(this.CurrentState, this);
-            foreach (var child in this.Children)
-            {
-                child.ChildCompleteEvent -= OnChildComplete;
-
-            }
-            this.FailureCount = 0;
-            this.SuccessCount = 0;
-            this.CurrentState = NodeStates.READY;
-
-  
-            return true;
-        }
-        else { return false; }
-    }
-
-    public override void OnChildComplete(NodeStates nodeState, BehaviourNode completedChild)
-    {
-
-        if (nodeState == NodeStates.FAILED)
-        {
-            this.FailureCount++;
-           
-
-           // completedChild.ChildCompleteEvent -= OnChildComplete;
-        }
-        else if(nodeState == NodeStates.SUCCEEDED)
-        {
-            this.SuccessCount++;
-            //  completedChild.ChildCompleteEvent -= OnChildComplete;
-
-        }
-        if (this.SuccessCount > 0 )
-        {
-            if (this.SuccessPolicy == Policy.REQUIRE_ONE)
-            {
-                this.CurrentState = NodeStates.SUCCEEDED;
-            }
-        }
-
-
-        if (this.SuccessPolicy == Policy.REQUIRE_ALL && this.SuccessCount >= this.Children.Count - 1)
-        {
-            this.CurrentState = NodeStates.SUCCEEDED;
-        }
-        if (this.SuccessPolicy == Policy.REQUIRE_ALL && this.FailureCount > 0)
-        {
-            this.CurrentState = NodeStates.FAILED;
-        } 
-    }
 
     public override void OnInitialize()
     {
+       
         if (this.CurrentState == NodeStates.READY)
         {
             this.CurrentState = NodeStates.RUNNING;
@@ -100,24 +35,85 @@ public class ParallelNode : BehaviourNode
 
     public override List<BehaviourNode> UpdateNode()
     {
-        Debug.Log(this.gameObject.name + " updating");
-
         List<BehaviourNode> children = new List<BehaviourNode>();
+        /* //not sure if this is how repeating nodes will be handled
         if (RepeatPolicy != RepeatPolicies.NOREPEAT)
         {
-            // children.Add(this);
+             children.Add(this);
         }
+        */
+        //add children to schedular
         if (this.Children.Count > 0 && this.CurrentState != NodeStates.FAILED)
-        {
-           
+        {        
           foreach(var child in this.Children)
             {
-                Debug.Log(this.Log + " running  " + child.Log);
                 children.Add(child);
             }
         }
         return children;
     }
+
+    public override void OnChildComplete(NodeStates nodeState, BehaviourNode completedChild)
+    {
+        //track how many successes and failures
+        if (nodeState == NodeStates.FAILED)
+        { 
+            this.FailureCount++;
+        }
+        else if (nodeState == NodeStates.SUCCEEDED)
+        {
+            this.SuccessCount++;
+        }
+        //check if the node only requires one child to succeed
+        if (this.SuccessPolicy == Policy.REQUIRE_ONE)
+        {
+            if (this.SuccessCount > 0)
+            {
+                this.CurrentState = NodeStates.SUCCEEDED;
+            }
+        }
+        // check if the node requires all to succeed
+        if (this.SuccessPolicy == Policy.REQUIRE_ALL && this.SuccessCount >= this.Children.Count - 1)
+        {
+            this.CurrentState = NodeStates.SUCCEEDED;
+        } //note to self* this can probably be cleaned up
+        if (this.SuccessPolicy == Policy.REQUIRE_ALL && this.FailureCount > 0)
+        {
+            this.CurrentState = NodeStates.FAILED;
+        }
+    }
+
+    public override bool IsTerminated()
+    {
+        if (this.CurrentState == NodeStates.FAILED || this.CurrentState == NodeStates.SUCCEEDED)
+        {
+            //change the return state to match the return policy 
+            if (ReturnPolicy == ReturnPolicies.ALWAYSUCCEED)
+            {
+                this.CurrentState = NodeStates.SUCCEEDED;
+            }
+            else if (ReturnPolicy == ReturnPolicies.ALWAYSFAIL)
+            {
+                this.CurrentState = NodeStates.FAILED;
+            }
+            //fire event to let any listeners know this node is done
+            if (this.ChildCompleteEvent != null) this.ChildCompleteEvent(this.CurrentState, this);
+            // stop listening to child nodes
+            foreach (var child in this.Children)
+            {
+                child.ChildCompleteEvent -= OnChildComplete;
+            }
+            //reset node values
+            this.FailureCount = 0;
+            this.SuccessCount = 0;
+            this.CurrentState = NodeStates.READY;
+
+            return true;
+        }
+        else return false;
+    }
+
+
 }
 public enum Policy
 {

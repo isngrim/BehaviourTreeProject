@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+//currrently a monobehaviour becuase it solved an issue i had with unity
 public abstract class BehaviourNode : MonoBehaviour
 {
     public string Log;
@@ -11,9 +11,12 @@ public abstract class BehaviourNode : MonoBehaviour
     // does the node always succeed or fail? 
     public ReturnPolicies ReturnPolicy;
     public NodeStates CurrentState;
+    //not currently used,is meant for fallback behaviours
     public BehaviourNode ParentNode;
+    //event for tracking child node states
     public delegate void BehaviourObserver(NodeStates nodeState, BehaviourNode completedChild);
     public abstract event BehaviourObserver ChildCompleteEvent;
+    //all child nodes
     public List<BehaviourNode> Children;
     //Called when we start runing the behaviour
     abstract public void OnInitialize();

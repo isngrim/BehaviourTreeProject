@@ -9,38 +9,88 @@ public class SequenceNode : BehaviourNode
     BehaviourNode CurrentNode;
 
     public override event BehaviourObserver ChildCompleteEvent;
-    private void Start()
+
+
+    public override void OnInitialize()
     {
-   
+        if (ChildIndex == -1)
+        {
+            // if(IsRandomSequence)
+            // RandomizeChildren();
+            this.CurrentState = NodeStates.RUNNING;
+            this.ChildIndex++;
+            Mathf.Clamp(this.ChildIndex, 0, this.Children.Count - 1);
+            if (this.Children[0] != null) this.CurrentNode = this.Children[0];
+        }
+        if (this.CurrentNode != null)
+        {
+            this.CurrentNode.ChildCompleteEvent += OnChildComplete;
+        }
+        else this.CurrentState = NodeStates.FAILED;
     }
+
+
+    public override List<BehaviourNode> UpdateNode()
+    {
+
+        List<BehaviourNode> children = new List<BehaviourNode>();
+        /* //not sure if this is how repeating nodes will be handled
+        if(RepeatPolicy != RepeatPolicies.NOREPEAT)
+        {
+            children.Add(this);
+        }*/
+        //add next child in sequence to the schedular
+       if(this.ChildIndex != -1 &&  this.ChildIndex  <=this.Children.Count-1 && this.CurrentState != NodeStates.FAILED)
+       {
+            if (this.Children[this.ChildIndex] != null)
+            {
+                children.Add(this.Children[this.ChildIndex]);
+            }
+       }
+        return children;
+    }
+
+
+
     public override bool IsTerminated()
     {
 
         if (this.CurrentState == NodeStates.FAILED || this.CurrentState == NodeStates.SUCCEEDED)
         {
+            //change the node state to match the return policy 
             if (ReturnPolicy == ReturnPolicies.ALWAYSUCCEED)
             {
                 this.CurrentState = NodeStates.SUCCEEDED;
             }
+            else if (ReturnPolicy == ReturnPolicies.ALWAYSFAIL)
+            {
+                this.CurrentState = NodeStates.FAILED;
+            }
+            //fire event to let any listeners know this node is done
             if (this.ChildCompleteEvent != null) this.ChildCompleteEvent(this.CurrentState, this);
+            //reset node values
             this.ChildIndex = -1;
             return true;
         }
-        else { return false; }
+        else return false;
     }
 
+    //note to self: i think i can move the "completedChild.ChildCompleteEvent -= OnChildComplete;" to a single line at the end
     public override void OnChildComplete(NodeStates nodeState, BehaviourNode completedChild)
-    {  
-        if(completedChild.CurrentState == NodeStates.FAILED)
+    {
+        //if any child in the sequence fails,we fail.
+        if (completedChild.CurrentState == NodeStates.FAILED)
         {
             this.CurrentState = NodeStates.FAILED;
             completedChild.ChildCompleteEvent -= OnChildComplete;
         }
-        else if(completedChild == this.Children[this.Children.Count-1])
+        //if were a the end of the list,the sequence has succeeded 
+        else if (completedChild == this.Children[this.Children.Count - 1])
         {
             this.CurrentState = NodeStates.SUCCEEDED;
             completedChild.ChildCompleteEvent -= OnChildComplete;
         }
+        //otherwise,we move to next node in sequence
         else
         {
             this.ChildIndex++;
@@ -55,41 +105,5 @@ public class SequenceNode : BehaviourNode
         }
     }
 
-    public override void OnInitialize()
-    {
-        if (ChildIndex == -1)
-        {
-            this.CurrentState = NodeStates.RUNNING;
-            this.ChildIndex++;
-            Mathf.Clamp(this.ChildIndex, 0, this.Children.Count - 1);
-            if (this.Children[0] != null) this.CurrentNode = this.Children[0];
-        }
-        if (this.CurrentNode != null)
-        {
-            this.CurrentNode.ChildCompleteEvent += OnChildComplete;
-        }
-        else this.CurrentState = NodeStates.FAILED;
-    }
-
-    public override List<BehaviourNode> UpdateNode()
-    {
-        Debug.Log(this.gameObject.name + " updating");
-        Debug.Log(this.Log + "index = " + this.ChildIndex);
-
-        List<BehaviourNode> children = new List<BehaviourNode>();
-        if(RepeatPolicy != RepeatPolicies.NOREPEAT)
-        {
-          //  children.Add(this);
-        }
-       if(this.ChildIndex != -1 &&  this.ChildIndex  <=this.Children.Count-1 && this.CurrentState != NodeStates.FAILED)
-       {
-           Debug.Log("updating");
-            if (this.Children[this.ChildIndex] != null)
-            {
-                children.Add(this.Children[this.ChildIndex]);
-            }
-       }
-        return children;
-    }
 
 }
