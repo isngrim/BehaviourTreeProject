@@ -20,7 +20,7 @@ public class BehaviourNodeData
         if (this.NodeType == NodeType.PARALLEL)
         {
             Debug.Log("ParallelNode");
-             newNode = new ParallelNode()
+             newNode = new ParallelNode
         {
             NodeId = this.NodeGuid,
             ReturnPolicy = this.ReturnPolicy,
@@ -31,7 +31,7 @@ public class BehaviourNodeData
         }
         if (this.NodeType == NodeType.SELECTOR)
         {
-            Debug.Log("ParallelNode");
+            Debug.Log("SelectorNode");
              newNode = new SelectorNode()
             {
                 NodeId = this.NodeGuid,

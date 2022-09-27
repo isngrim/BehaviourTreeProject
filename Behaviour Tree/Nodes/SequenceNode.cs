@@ -20,7 +20,7 @@ public class SequenceNode : BehaviourNode
             this.CurrentState = NodeStates.RUNNING;
             this.ChildIndex++;
             Mathf.Clamp(this.ChildIndex, 0, this.Children.Count - 1);
-            if (this.Children[0] != null) this.CurrentNode = this.Children[0];
+            if (this.Children.Count >0) this.CurrentNode = this.Children[0];
         }
         if (this.CurrentNode != null)
         {

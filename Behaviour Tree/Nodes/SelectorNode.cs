@@ -21,7 +21,7 @@ public class SelectorNode : BehaviourNode
             this.CurrentState = NodeStates.RUNNING;
             this.ChildIndex++;
             Mathf.Clamp(this.ChildIndex, 0, this.Children.Count - 1);
-            if (this.Children[0] != null) this.CurrentNode = this.Children[0];
+            if (this.Children.Count > 0) this.CurrentNode = this.Children[0];
         }
         if (this.CurrentNode != null)
         {
@@ -32,8 +32,8 @@ public class SelectorNode : BehaviourNode
 
     public override List<BehaviourNode> UpdateNode()
     {
-        Debug.Log(this.gameObject.name + " updating");
-        Debug.Log(this.Log + "index = " + this.ChildIndex);
+      //  Debug.Log(this.gameObject.name + " updating");
+      //  Debug.Log(this.Log + "index = " + this.ChildIndex);
 
         List<BehaviourNode> children = new List<BehaviourNode>();
         if (RepeatPolicy != RepeatPolicies.NOREPEAT)
@@ -42,7 +42,7 @@ public class SelectorNode : BehaviourNode
         }
         if (this.ChildIndex != -1 && this.ChildIndex <= this.Children.Count - 1 && this.CurrentState != NodeStates.FAILED)
         {
-            Debug.Log( "updating");
+         //   Debug.Log( "updating");
             if (this.Children[this.ChildIndex] != null)
             {
                 children.Add(this.Children[this.ChildIndex]);

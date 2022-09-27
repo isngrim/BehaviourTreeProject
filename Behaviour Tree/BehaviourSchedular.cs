@@ -6,7 +6,7 @@ using UnityEngine;
 public class BehaviourSchedular : MonoBehaviour
 {
     Queue<BehaviourNode> ActiveBehaviours;
-    [SerializeField]
+    [SerializeReference]
    public BehaviourNode Root;
     public BehaviourContainer TreeData;
     //   Blackboard Blackboard;
@@ -15,7 +15,7 @@ public class BehaviourSchedular : MonoBehaviour
         this.ActiveBehaviours = new Queue<BehaviourNode>();
         this.Root = this.BuildTree(this.TreeData);
         
-      //  Debug.Log("root generated as " + this.Root.NodeId);
+      Debug.Log("root generated as " + this.Root);
     
             //add root to queue
             if (Root != null)
@@ -54,7 +54,7 @@ public class BehaviourSchedular : MonoBehaviour
     {
         //grab first node in queue
         var currentNode = this.ActiveBehaviours.Dequeue();
-        if (currentNode == null) { Debug.Log("no node"); return false; }
+        if (currentNode == null) { return false; }
         //initialize it
         currentNode.OnInitialize();
         //update the node

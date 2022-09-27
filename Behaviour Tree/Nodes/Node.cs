@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 //currrently a monobehaviour becuase it solved an issue i had with unity
-public abstract class BehaviourNode : MonoBehaviour
+[System.Serializable]
+public abstract class BehaviourNode 
 {
     public string Log;
     public string NodeId;
@@ -17,7 +18,8 @@ public abstract class BehaviourNode : MonoBehaviour
     public delegate void BehaviourObserver(NodeStates nodeState, BehaviourNode completedChild);
     public abstract event BehaviourObserver ChildCompleteEvent;
     //all child nodes
-    public List<BehaviourNode> Children;
+    [SerializeReference][SerializeField]
+    public List<BehaviourNode> Children = new List<BehaviourNode>();
     //Called when we start runing the behaviour
     abstract public void OnInitialize();
     //Here we do whatever the behaviour does,returns a list of BehaviourNodes that is then stored by the scheduler
