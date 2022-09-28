@@ -20,8 +20,9 @@ public class BehaviourNodeData
         if (this.NodeType == NodeType.PARALLEL)
         {
             Debug.Log("ParallelNode");
-             newNode = new ParallelNode
-        {
+            newNode = new ParallelNode
+            {
+            Log = this.NodeType.ToString(),
             NodeId = this.NodeGuid,
             ReturnPolicy = this.ReturnPolicy,
             RepeatPolicy = this.RepeatPolicy,
@@ -34,7 +35,8 @@ public class BehaviourNodeData
             Debug.Log("SelectorNode");
              newNode = new SelectorNode()
             {
-                NodeId = this.NodeGuid,
+                 Log = this.NodeType.ToString(),
+                 NodeId = this.NodeGuid,
                 ReturnPolicy = this.ReturnPolicy,
                 RepeatPolicy = this.RepeatPolicy
              
@@ -46,6 +48,7 @@ public class BehaviourNodeData
             Debug.Log("SEQUENCENode");
             newNode = new SequenceNode()
             {
+                Log = this.NodeType.ToString(),
                 NodeId = this.NodeGuid,
                 ReturnPolicy = this.ReturnPolicy,
                 RepeatPolicy = this.RepeatPolicy

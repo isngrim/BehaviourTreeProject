@@ -45,6 +45,7 @@ public class GraphSaveUtility
                 bool isNewNode = true;
                 foreach(var nodeData in behaviourContainer.BehaviourNodeData)
                 {
+
                     if (nodeData.NodeGuid == node.GUID)
                         isNewNode = false;
                 }
@@ -60,6 +61,10 @@ public class GraphSaveUtility
         if(!AssetDatabase.IsValidFolder(path: "Assets/Resources"))
         {
             AssetDatabase.CreateFolder(parentFolder: "Assets", newFolderName: "Resources");
+        }
+        if(AssetDatabase.Contains(behaviourContainer))
+        {
+            AssetDatabase.DeleteAsset(path: $"Assets/Resources/{fileName}.asset");
         }
         AssetDatabase.CreateAsset(behaviourContainer, path: $"Assets/Resources/{fileName}.asset");
         AssetDatabase.SaveAssets();

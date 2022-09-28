@@ -5,7 +5,7 @@ using UnityEngine;
 public class SequenceNode : BehaviourNode
 {
     int ChildIndex = -1;
-
+    [SerializeReference]
     BehaviourNode CurrentNode;
 
     public override event BehaviourObserver ChildCompleteEvent;

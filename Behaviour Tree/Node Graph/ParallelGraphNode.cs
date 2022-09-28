@@ -33,7 +33,7 @@ public class ParallelGraphNode : BehaviourGraphNode
 
     public override BehaviourNodeData SaveToNodeData()
     {
-        BehaviourNodeData nodeData = new BehaviourNodeData()
+        BehaviourNodeData nodeData = new BehaviourNodeData
         {
 
             NodeGuid = this.GUID,

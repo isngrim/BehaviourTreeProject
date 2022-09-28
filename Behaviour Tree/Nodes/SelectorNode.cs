@@ -5,6 +5,7 @@ using UnityEngine;
 public class SelectorNode : BehaviourNode
 {
     int ChildIndex = -1;
+    [SerializeReference]
     BehaviourNode CurrentNode;
 
     public override event BehaviourObserver ChildCompleteEvent;
