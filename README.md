@@ -15,4 +15,4 @@ This is a work in progress Behaviour tree library written in c# and intended to 
 - [ ] switch saved node data to xml
 - [ ] add documentation to the graph editor
 - [ ] add Debug graph
-- [ ] add runtime changes of behaviour tree node variables
+- [ ] add runtime changes of behaviour tree node variables in  the graph editor
