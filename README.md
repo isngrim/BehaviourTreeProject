@@ -1,6 +1,6 @@
 # BehaviourTreeProject
 
-This is a work in progress Behaviour tree library written in c# and intended to be game engine agnostic.
+This is a work in progress event driven Behaviour tree library written in c# and intended to be game engine agnostic.
 
 # To Do list:
 - [ ] Implement Blackboards
