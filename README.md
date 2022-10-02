@@ -1,10 +1,11 @@
 # BehaviourTreeProject
 
 This is a work in progress event driven Behaviour tree library written in c# and intended to be game engine agnostic.
+# Features
+- Event Driven Behaviour Tree
+- Behaviour tree graph editor (Unity3D) 
 
 # To Do list:
-- [ ] Implement Blackboards
-- [ ] implement Leaf Nodes
 - [ ] Implement Decorator Nodes:
 - 
 - Blackboard check Nodes
@@ -12,6 +13,7 @@ This is a work in progress event driven Behaviour tree library written in c# and
 - Pathfinding related node ("does path exist", "are we at postion",etc.)
 - time limit node?
 - 
+- [ ] Document Leaf Nodes
 - [ ] switch saved node data to xml
 - [ ] add documentation to the graph editor
 - [ ] add Debug graph
