@@ -8,7 +8,7 @@ using System;
 public class SelectorGraphNode : BehaviourGraphNode
 {
 
-    public SelectorGraphNode(BehaviourGraphView graph)
+    public SelectorGraphNode()
     {
         this.nodeType = NodeType.SELECTOR;
     }

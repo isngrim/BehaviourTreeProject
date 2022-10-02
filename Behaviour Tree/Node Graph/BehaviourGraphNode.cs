@@ -17,6 +17,6 @@ public abstract class BehaviourGraphNode : Node
     public NodeStates CurrentState;
     public EnumField RepeatPolicyField;
     public EnumField ReturnPolicyField;
-    public abstract BehaviourNodeData SaveToNodeData();
+    public virtual BehaviourNodeData SaveToNodeData() { throw new System.NotImplementedException(); }
 
 }

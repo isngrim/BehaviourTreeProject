@@ -9,7 +9,7 @@ public class ParallelGraphNode : BehaviourGraphNode
 {
     public Policy SuccessPolicy =Policy.REQUIRE_ALL;
     public EnumField SuccessPolicyField;
-    public ParallelGraphNode(BehaviourGraphView graph)
+    public ParallelGraphNode()
     {
         this.nodeType = NodeType.PARALLEL;
 

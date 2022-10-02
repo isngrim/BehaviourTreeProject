@@ -10,8 +10,11 @@ using UnityEditor.UIElements;
 public class BehaviourGraphView : GraphView
 {
     public readonly Vector2 DefaultNodeSize = new Vector2(x: 150,y: 200);
-    public BehaviourGraphView()
+    private readonly NodeDataSource nodeDataSource;
+
+    public BehaviourGraphView(NodeDataSource nodeDataSource)
     {
+
         SetupZoom(ContentZoomer.DefaultMinScale, ContentZoomer.DefaultMaxScale);
         this.AddManipulator(new ContentDragger());
         this.AddManipulator(new SelectionDragger());
@@ -20,6 +23,8 @@ public class BehaviourGraphView : GraphView
         Insert(index: 0, grid);
         grid.StretchToParentSize();
         AddElement(GenerateEntryPointNode());
+        this.nodeDataSource = nodeDataSource;
+
     }
     private Port GeneratePort(BehaviourGraphNode node,Direction portDirection,Port.Capacity capacity = Port.Capacity.Single)
     {
@@ -27,7 +32,7 @@ public class BehaviourGraphView : GraphView
     }
     private BehaviourGraphNode GenerateEntryPointNode()
     {
-        var node = new SelectorGraphNode(this)
+        var node = new SelectorGraphNode()
         {
             title = "Root",
             GUID = Guid.NewGuid().ToString(),
@@ -59,34 +64,7 @@ public class BehaviourGraphView : GraphView
     }
     public BehaviourGraphNode CreateBehaviourNode(string nodeName, NodeType nodeType)
     {
-        BehaviourGraphNode behaviourNode = null;
-        if (nodeType == NodeType.PARALLEL)
-        {
-            behaviourNode = new ParallelGraphNode(this)
-            {
-                title = "Parallel Node",
-                Text = "Parallel Node",
-                GUID = Guid.NewGuid().ToString()
-            };
-        }
-      else  if (nodeType == NodeType.SELECTOR)
-        {
-            behaviourNode = new SelectorGraphNode(this)
-            {
-                title = "Selector Node",
-                Text = "Selector Node",
-                GUID = Guid.NewGuid().ToString()
-            };
-        }
-        else if (nodeType == NodeType.SEQUENCE)
-        {
-            behaviourNode = new SequenceGraphNode(this)
-            {
-                title = "Sequence Node",
-                Text = "Sequence Node",
-                GUID = Guid.NewGuid().ToString()
-            };
-        }
+        BehaviourGraphNode behaviourNode = nodeDataSource.BuildGraphNode(nodeType);
         var inputPort = GeneratePort(behaviourNode, Direction.Input, Port.Capacity.Multi);
         inputPort.portName = "Input";
         behaviourNode.inputContainer.Add(inputPort);

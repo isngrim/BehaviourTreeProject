@@ -4,7 +4,7 @@ using UnityEngine;
 [System.Serializable]
 public class SequenceGraphNode : BehaviourGraphNode
 {
-    public SequenceGraphNode(BehaviourGraphView graph)
+    public SequenceGraphNode()
     {
         this.nodeType = NodeType.SEQUENCE;
     }

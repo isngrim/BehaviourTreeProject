@@ -11,21 +11,24 @@ public class BehaviourGraph : EditorWindow
 {
     private BehaviourGraphView GraphView;
     private string FileName= "New Behaviour Tree";
-    string[] NodeOptions = { "Parallel Node", "Selector Node", "Sequence Node" };
+    // todo: name this something else later
+    NodeDataSource NodeDataSource = new NodeDataSource();
+    string[] NodeOptions => NodeDataSource.NodeOptions;
     int index = 0;
-    public NodeType[] options = new NodeType[]{NodeType.SELECTOR,
-    NodeType.SEQUENCE,
-    NodeType.PARALLEL, };
+    public NodeType[] options => NodeDataSource.NodeTypeOptions;
    [ MenuItem("Graph/Behaviour Tree Graph")]
     public static void OpenBehaviourGraphWindow()
     {
         var window = GetWindow<BehaviourGraph>();
         window.titleContent = new GUIContent(text: "Behaviour Tree Editor");
     }
+    //register the nodebuilders here
     private void ConstructGraphView()
     {
-        this.GraphView = new BehaviourGraphView
+        NodeDataSource.RegisterAllNodeBuilders();
+        this.GraphView = new BehaviourGraphView(NodeDataSource)
         {
+
             name = "Behaviuor Graph"
 
         };
