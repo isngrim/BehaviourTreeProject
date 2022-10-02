@@ -7,6 +7,6 @@ public class BehaviourContainer : ScriptableObject
 {
     [SerializeField]
     public List<NodeLinkData> NodeLinks = new List<NodeLinkData>();
-    [SerializeField]
+    [SerializeReference]
     public List<BehaviourNodeData> BehaviourNodeData = new List<BehaviourNodeData>();
 }

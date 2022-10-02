@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using System;
 
 public class BehaviourSchedular : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class BehaviourSchedular : MonoBehaviour
     [SerializeReference]
    public BehaviourNode Root;
     public BehaviourContainer TreeData;
-    //   Blackboard Blackboard;
+    Dictionary<Enum, object> Blackboard;
     private void Start()
     {
         this.ActiveBehaviours = new Queue<BehaviourNode>();

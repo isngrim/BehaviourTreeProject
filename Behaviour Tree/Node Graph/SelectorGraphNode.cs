@@ -21,7 +21,7 @@ public class SelectorGraphNode : BehaviourGraphNode
     public override BehaviourNodeData SaveToNodeData()
     {
 
-        var nodeData = new BehaviourNodeData()
+        var nodeData = new SelectorNodeData
         {
             NodeGuid = this.GUID,
             BehaviourStuff = this.Text,

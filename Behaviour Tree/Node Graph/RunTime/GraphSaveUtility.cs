@@ -7,6 +7,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEngine.UIElements;
 
+
 public class GraphSaveUtility 
 {
     private BehaviourGraphView TargetGraphView;
@@ -42,10 +43,12 @@ public class GraphSaveUtility
 
             foreach (var node in this.Nodes.Where(node => !node.EntryPoint))
             {
+                var jsonstring = JsonUtility.ToJson(node);
+                Debug.Log(jsonstring);
                 bool isNewNode = true;
                 foreach(var nodeData in behaviourContainer.BehaviourNodeData)
                 {
-
+                    
                     if (nodeData.NodeGuid == node.GUID)
                         isNewNode = false;
                 }
@@ -56,18 +59,19 @@ public class GraphSaveUtility
                     
                 }
             }
-          
+ 
         }
         if(!AssetDatabase.IsValidFolder(path: "Assets/Resources"))
         {
             AssetDatabase.CreateFolder(parentFolder: "Assets", newFolderName: "Resources");
         }
-        if(AssetDatabase.Contains(behaviourContainer))
-        {
+    
+            Debug.Log("savingOld");
             AssetDatabase.DeleteAsset(path: $"Assets/Resources/{fileName}.asset");
-        }
+       
         AssetDatabase.CreateAsset(behaviourContainer, path: $"Assets/Resources/{fileName}.asset");
         AssetDatabase.SaveAssets();
+
     }
     public void LoadGraph(string fileName)
     {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEditor.Experimental.GraphView;
 using UnityEditor.UIElements;
+[System.Serializable]
 public abstract class BehaviourGraphNode : Node
 {
     public string GUID;

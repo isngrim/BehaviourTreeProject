@@ -4,7 +4,7 @@ using UnityEditor.Experimental.GraphView;
 using UnityEngine;
 using UnityEditor.UIElements;
 using UnityEngine.UIElements;
-
+[System.Serializable]
 public class ParallelGraphNode : BehaviourGraphNode
 {
     public Policy SuccessPolicy =Policy.REQUIRE_ALL;
@@ -33,7 +33,7 @@ public class ParallelGraphNode : BehaviourGraphNode
 
     public override BehaviourNodeData SaveToNodeData()
     {
-        BehaviourNodeData nodeData = new BehaviourNodeData
+        BehaviourNodeData nodeData = new ParallelNodeData
         {
 
             NodeGuid = this.GUID,

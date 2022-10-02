@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+[System.Serializable]
 public class SequenceGraphNode : BehaviourGraphNode
 {
     public SequenceGraphNode(BehaviourGraphView graph)
@@ -14,7 +14,7 @@ public class SequenceGraphNode : BehaviourGraphNode
     }
     public override BehaviourNodeData SaveToNodeData()
     {
-        var nodeData = new BehaviourNodeData()
+        var nodeData = new SequenceNodeData
         {
             NodeGuid = this.GUID,
             BehaviourStuff = this.Text,
