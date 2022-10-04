@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -30,7 +31,7 @@ public class SequenceNode : BehaviourNode
     }
 
 
-    public override List<BehaviourNode> UpdateNode()
+    public override List<BehaviourNode> UpdateNode(IBlackboard blackboard)
     {
 
         List<BehaviourNode> children = new List<BehaviourNode>();

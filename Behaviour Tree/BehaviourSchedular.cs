@@ -10,12 +10,14 @@ public class BehaviourSchedular : MonoBehaviour
     [SerializeReference]
    public BehaviourNode Root;
     public BehaviourContainer TreeData;
-    Dictionary<Enum, object> Blackboard;
+    IBlackboard Blackboard;
+    [SerializeReference]
+    public BlackboardKeys Testing;
     private void Start()
     {
         this.ActiveBehaviours = new Queue<BehaviourNode>();
-        this.Root = this.BuildTree(this.TreeData);
-        
+       // this.Root = this.BuildTree(this.TreeData);
+
       Debug.Log("root generated as " + this.Root);
     
             //add root to queue
@@ -59,7 +61,7 @@ public class BehaviourSchedular : MonoBehaviour
         //initialize it
         currentNode.OnInitialize();
         //update the node
-        List<BehaviourNode> returnedNodes = currentNode.UpdateNode();
+        List<BehaviourNode> returnedNodes = currentNode.UpdateNode(Blackboard);
         //enqueue its children
         foreach(var node in returnedNodes)
         {
@@ -94,4 +96,9 @@ public class BehaviourSchedular : MonoBehaviour
           this.ActiveBehaviours.Enqueue(this.Root);
         }
     }
+}
+public enum BlackboardKeys
+{
+    TARGET,
+    PLAYER
 }

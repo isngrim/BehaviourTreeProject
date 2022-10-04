@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -33,7 +34,7 @@ public class ParallelNode : BehaviourNode
         
     }
 
-    public override List<BehaviourNode> UpdateNode()
+    public override List<BehaviourNode> UpdateNode(IBlackboard blackboard )
     {
         List<BehaviourNode> children = new List<BehaviourNode>();
         /* //not sure if this is how repeating nodes will be handled

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -17,14 +18,14 @@ public abstract class BaseLeafNode : BehaviourNode
 
     }
 
-    public override List<BehaviourNode> UpdateNode()
+    public override List<BehaviourNode> UpdateNode(IBlackboard  blackboard )
     {
-        this.CurrentState = HandleNodeBehaviour();
+        this.CurrentState = HandleNodeBehaviour(blackboard);
         var childList = new List<BehaviourNode>();
         childList.Add(this);
         return childList;
     }
-    public abstract NodeStates HandleNodeBehaviour();
+    public abstract NodeStates HandleNodeBehaviour(IBlackboard blackboard);
 
     public override bool IsTerminated()
     {
@@ -47,10 +48,10 @@ public abstract class BaseLeafNode : BehaviourNode
         }
         else return false;
     }
-    /*public override void OnChildComplete(NodeStates nodeState, BehaviourNode completedChild)
+    public override void OnChildComplete(NodeStates nodeState, BehaviourNode completedChild)
     {
         //there are no children
-    }*/
+    }
 
 
 }

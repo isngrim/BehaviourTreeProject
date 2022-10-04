@@ -90,41 +90,8 @@ public class BehaviourGraphView : GraphView
     }
     public BehaviourGraphNode CreateBehaviourNode(BehaviourNodeData nodeData)
     {
-        BehaviourGraphNode behaviourNode = null;
-        if (nodeData.NodeType == NodeType.PARALLEL)
-        {
-            behaviourNode = new ParallelGraphNode(this, nodeData)
-            {
-                title = "Parallel Node",
-                Text = "Parallel Node",
-                GUID = Guid.NewGuid().ToString(),
-                RepeatPolicy = nodeData.RepeatPolicy,
-                ReturnPolicy = nodeData.ReturnPolicy
-            };
-        }
-        else if (nodeData.NodeType == NodeType.SELECTOR)
-        {
-            behaviourNode = new SelectorGraphNode(this, nodeData )
-            {
-                title = "Selector Node",
-                Text = "Selector Node",
-                GUID = Guid.NewGuid().ToString(),
-                RepeatPolicy = nodeData.RepeatPolicy,
-                ReturnPolicy = nodeData.ReturnPolicy
-            };
-        }
-        else if (nodeData.NodeType == NodeType.SEQUENCE)
-        {
-            behaviourNode = new SequenceGraphNode(this, nodeData )
-            {
-                title = "Sequence Node",
-                Text = "Sequence Node",
-                GUID = Guid.NewGuid().ToString(),
-                RepeatPolicy = nodeData.RepeatPolicy,
-                ReturnPolicy = nodeData.ReturnPolicy
-                
-            };
-        }
+        BehaviourGraphNode behaviourNode = nodeDataSource.BuildGraphNode(nodeData.NodeType);
+ 
         var inputPort = GeneratePort(behaviourNode, Direction.Input, Port.Capacity.Multi);
         inputPort.portName = "Input";
         behaviourNode.inputContainer.Add(inputPort);

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 //currrently a monobehaviour becuase it solved an issue i had with unity
@@ -23,7 +24,7 @@ public abstract class BehaviourNode
     //Called when we start runing the behaviour
     abstract public void OnInitialize();
     //Here we do whatever the behaviour does,returns a list of BehaviourNodes that is then stored by the scheduler
-    abstract public List<BehaviourNode> UpdateNode();
+    abstract public List<BehaviourNode> UpdateNode(IBlackboard blackboard);
     //Called on recieving the ChildCompleteEvent from the child
     abstract public void OnChildComplete(NodeStates nodeState,BehaviourNode completedChild);
     

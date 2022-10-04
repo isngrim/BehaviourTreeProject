@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,7 +32,7 @@ public class SelectorNode : BehaviourNode
         else this.CurrentState = NodeStates.FAILED;
     }
 
-    public override List<BehaviourNode> UpdateNode()
+    public override List<BehaviourNode> UpdateNode(IBlackboard blackboard)
     {
       //  Debug.Log(this.gameObject.name + " updating");
       //  Debug.Log(this.Log + "index = " + this.ChildIndex);
