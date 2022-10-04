@@ -14,6 +14,7 @@ This is a work in progress event driven Behaviour tree library written in c# and
 - time limit node?
 - 
 - [ ] add Blackboard to graph editor
+- [ ] Change approach for blackboard keys
 - [ ] Document Leaf Nodes
 - [ ] switch saved node data to xml
 - [ ] add documentation to the graph editor
