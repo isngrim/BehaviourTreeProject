@@ -9,7 +9,7 @@ public class LeafGraphNode : BehaviourGraphNode
 public EnumField SuccessPolicyField;
 public LeafGraphNode(BehaviourGraphView graph)
 {
-    this.nodeType = NodeType.LEAF;
+    this.nodeType = NodeType.MoveTo;
 }
 public LeafGraphNode(BehaviourGraphView graph, BehaviourNodeData nodeData)
 {

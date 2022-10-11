@@ -8,9 +8,10 @@ public class SequenceGraphNode : BehaviourGraphNode
     {
         this.nodeType = NodeType.SEQUENCE;
     }
-    public SequenceGraphNode(BehaviourGraphView graph, BehaviourNodeData nodeData)
+    public SequenceGraphNode( BehaviourNodeData nodeData)
     {
         this.nodeType = nodeData.NodeType;
+        this.RepeatPolicy = nodeData.RepeatPolicy;
     }
     public override BehaviourNodeData SaveToNodeData()
     {

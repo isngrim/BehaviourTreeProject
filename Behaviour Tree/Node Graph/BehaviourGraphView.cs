@@ -90,7 +90,7 @@ public class BehaviourGraphView : GraphView
     }
     public BehaviourGraphNode CreateBehaviourNode(BehaviourNodeData nodeData)
     {
-        BehaviourGraphNode behaviourNode = nodeDataSource.BuildGraphNode(nodeData.NodeType);
+        BehaviourGraphNode behaviourNode = nodeDataSource.BuildGraphNode(nodeData);
  
         var inputPort = GeneratePort(behaviourNode, Direction.Input, Port.Capacity.Multi);
         inputPort.portName = "Input";

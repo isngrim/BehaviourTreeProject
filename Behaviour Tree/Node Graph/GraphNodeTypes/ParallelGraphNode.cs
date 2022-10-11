@@ -19,10 +19,10 @@ public class ParallelGraphNode : BehaviourGraphNode
         this.extensionContainer.Add(SuccessPolicyField);
         
     }
-    public ParallelGraphNode(BehaviourGraphView graph,BehaviourNodeData nodeData)
+    public ParallelGraphNode(BehaviourNodeData nodeData)
     {
         this.nodeType = nodeData.NodeType;
-
+        this.RepeatPolicy = nodeData.RepeatPolicy;
         SuccessPolicyField = new EnumField(nodeData.SuccessPolicy);
         SuccessPolicyField.label = "Success Policy";
         SuccessPolicyField.value = nodeData.SuccessPolicy;

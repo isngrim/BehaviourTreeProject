@@ -18,4 +18,14 @@ public class SequenceNodeBuilder : INodeBuilder
            GUID = Guid.NewGuid().ToString()
        };
     }
+
+    public BehaviourGraphNode Build(BehaviourNodeData nodeData)
+    {
+        return new SequenceGraphNode(nodeData)
+        {
+            title = Title,
+            Text = Title,
+            GUID = Guid.NewGuid().ToString()
+        };
+    }
 }

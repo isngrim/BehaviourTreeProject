@@ -51,10 +51,3 @@ public enum ReturnPolicies
     ALWAYSUCCEED,
     ALWAYSFAIL,
 }
-public enum NodeType
-{
-    SELECTOR,
-    SEQUENCE,
-    PARALLEL,
-    LEAF
-}

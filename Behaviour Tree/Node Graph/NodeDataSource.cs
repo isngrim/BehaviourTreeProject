@@ -12,6 +12,10 @@ public class NodeDataSource
     {
         return NodeFactory[nodeType].Build();
     }
+    public BehaviourGraphNode BuildGraphNode(BehaviourNodeData nodeData)
+    {
+        return NodeFactory[nodeData.NodeType].Build(nodeData);
+    }
     public void RegisterNodeBuilder(INodeBuilder nodeBuilder)
     {
         NodeFactory[nodeBuilder.NodeType] = nodeBuilder;
@@ -23,6 +27,7 @@ public interface INodeBuilder
     NodeType NodeType { get; }
     string Title { get; }
     BehaviourGraphNode Build();
+    BehaviourGraphNode Build(BehaviourNodeData nodeData);
 }
 public static class NodeDataSourceExtensions
 {
@@ -32,5 +37,13 @@ public static class NodeDataSourceExtensions
         dataSource.RegisterNodeBuilder(new SequenceNodeBuilder());  
         dataSource.RegisterNodeBuilder(new ParallelNodeBuilder());  
         dataSource.RegisterNodeBuilder(new SelectorNodeBuilder());
+        dataSource.RegisterNodeBuilder(new MoveToNodeBuilder());
     }
+}
+public enum NodeType
+{
+    SELECTOR,
+    SEQUENCE,
+    PARALLEL,
+    MoveTo
 }

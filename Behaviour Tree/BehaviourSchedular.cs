@@ -11,19 +11,18 @@ public class BehaviourSchedular : MonoBehaviour
    public BehaviourNode Root;
     public BehaviourContainer TreeData;
     IBlackboard Blackboard;
-    [SerializeReference]
-    public BlackboardKeys Testing;
+
     private void Start()
     {
+        Blackboard = GetComponent<CharacterBlackboard>();
         this.ActiveBehaviours = new Queue<BehaviourNode>();
-       // this.Root = this.BuildTree(this.TreeData);
+        this.Root = this.BuildTree(this.TreeData);
 
       Debug.Log("root generated as " + this.Root);
     
             //add root to queue
             if (Root != null)
                 this.ActiveBehaviours.Enqueue(this.Root);
-      //  if(this.ActiveBehaviours.Count <=0) { Debug.Log("root enqueued"); }
 
     }
     //build tree from node data
@@ -96,9 +95,4 @@ public class BehaviourSchedular : MonoBehaviour
           this.ActiveBehaviours.Enqueue(this.Root);
         }
     }
-}
-public enum BlackboardKeys
-{
-    TARGET,
-    PLAYER
 }

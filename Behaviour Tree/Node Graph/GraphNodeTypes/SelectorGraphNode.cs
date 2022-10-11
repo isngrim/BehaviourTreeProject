@@ -12,7 +12,7 @@ public class SelectorGraphNode : BehaviourGraphNode
     {
         this.nodeType = NodeType.SELECTOR;
     }
-    public SelectorGraphNode(BehaviourGraphView graph, BehaviourNodeData nodeData)
+    public SelectorGraphNode( BehaviourNodeData nodeData)
     {
         this.nodeType = NodeType.SELECTOR;
         this.RepeatPolicy = nodeData.RepeatPolicy;

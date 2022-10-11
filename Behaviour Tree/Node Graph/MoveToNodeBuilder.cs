@@ -3,15 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class SelectorNodeBuilder : INodeBuilder
+public class MoveToNodeBuilder : INodeBuilder
 {
-    public NodeType NodeType => NodeType.SELECTOR;
+    public NodeType NodeType => NodeType.MoveTo;
 
-    public string Title => "Selector Node";
+    public string Title => "MoveTo Node";
 
     public BehaviourGraphNode Build()
     {
-        return  new SelectorGraphNode()
+        return new MoveToGraphNode
         {
             title = Title,
             Text = Title,
@@ -21,11 +21,13 @@ public class SelectorNodeBuilder : INodeBuilder
 
     public BehaviourGraphNode Build(BehaviourNodeData nodeData)
     {
-        return new SelectorGraphNode(nodeData)
+        var moveToData = nodeData as MoveToNodeData;
+        return new MoveToGraphNode(nodeData)
         {
             title = Title,
             Text = Title,
-            GUID = Guid.NewGuid().ToString()
+            GUID = Guid.NewGuid().ToString(),
+
         };
     }
 }

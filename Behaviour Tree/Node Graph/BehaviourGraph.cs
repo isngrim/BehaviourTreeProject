@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine.UIElements;
 using UnityEditor.UIElements;
 using System;
+using System.Linq;
 
 
 public class BehaviourGraph : EditorWindow
@@ -48,8 +49,8 @@ public class BehaviourGraph : EditorWindow
         toolbar.Add(child: new Button( clickEvent:() => RequestDataOperation(true)){ text = "Save Data"});
         toolbar.Add(child: new Button(clickEvent: () => RequestDataOperation(false)) { text = "Load Data" });
 
- 
-            var nodeTypes = new List<NodeType> { NodeType.PARALLEL,NodeType.SELECTOR,NodeType.SEQUENCE };
+
+        List<NodeType> nodeTypes = Enum.GetValues(typeof(NodeType)).Cast<NodeType>().ToList();
             var popup = new PopupField<NodeType>("Node Types",nodeTypes,0);
             var CreateButton = new Button(clickEvent: () =>
             {

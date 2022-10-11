@@ -17,4 +17,15 @@ public class ParallelNodeBuilder : INodeBuilder
             GUID = Guid.NewGuid().ToString()
         };
     }
+
+    public BehaviourGraphNode Build(BehaviourNodeData nodeData)
+    {
+        var parallelNodeData = (ParallelNodeData)nodeData;
+        return new ParallelGraphNode(nodeData)
+        {
+            title = Title,
+            Text = Title,
+            GUID = Guid.NewGuid().ToString(),
+        };
+    }
 }
